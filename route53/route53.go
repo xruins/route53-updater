@@ -12,11 +12,9 @@ import (
 
 // Route53 represents notification of DNS records.
 type Route53 struct {
-	Domain          string
-	HostedZoneID    string
-	AccessKeyID     string
-	AccessKeySecret string
-	TTL             time.Duration
+	Domain       string
+	HostedZoneID string
+	TTL          time.Duration
 }
 
 // Notify notifies DNS records to Route53.
