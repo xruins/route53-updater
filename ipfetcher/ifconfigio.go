@@ -10,7 +10,7 @@ import (
 type IfconfigIoFetcher struct{}
 
 const (
-	ifconfigIoURL = "https://ifconfig.io"
+	ifconfigIoURL = "https://ifconfig.io/ip"
 )
 
 // FetchIPv4 fetches IPv4 address from ifconfig.io
@@ -19,10 +19,11 @@ func (i *IfconfigIoFetcher) FetchIPv4(ctx context.Context) (net.IP, error) {
 	if err != nil {
 		return nil, err
 	}
+	fmt.Printf("ipbytes: %s\n", ipBytes)
 
 	ip := net.ParseIP(string(ipBytes))
 	if ip == nil {
-		return nil, fmt.Errorf("fetched string cannot be parsed as IP address. string: %s")
+		return nil, fmt.Errorf("fetched string cannot be parsed as IP address. string: %s", ip)
 	}
 	return ip, nil
 }
@@ -33,10 +34,10 @@ func (i *IfconfigIoFetcher) FetchIPv6(ctx context.Context) (net.IP, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Printf("ipbytes: %s\n", ipBytes)
 	ip := net.ParseIP(string(ipBytes))
 	if ip == nil {
-		return nil, fmt.Errorf("fetched string cannot be parsed as IP address. string: %s")
+		return nil, fmt.Errorf("fetched string cannot be parsed as IP address. string: %s", ip)
 	}
 	return ip, nil
 }

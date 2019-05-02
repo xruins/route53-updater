@@ -18,16 +18,16 @@ type Route53 struct {
 }
 
 // Notify notifies DNS records to Route53.
-func (r *Route53) Notify(ctx context.Context, ipv4Addr *net.IP, ipv6Addr *net.IP) error {
+func (r *Route53) Notify(ctx context.Context, ipv4Addr net.IP, ipv6Addr net.IP) error {
 	if ipv4Addr == nil && ipv6Addr == nil {
 		return errors.New("either or both of ipv4Addr and ipv6Addr required")
 	}
 
 	var resSets []*route53.ResourceRecordSet
-	if ipv4Addr == nil {
+	if ipv4Addr != nil {
 		resSets = append(resSets, r.makeChange(ipv4Addr, route53.RRTypeA))
 	}
-	if ipv6Addr == nil {
+	if ipv6Addr != nil {
 		resSets = append(resSets, r.makeChange(ipv4Addr, route53.RRTypeAaaa))
 	}
 
@@ -57,7 +57,7 @@ func (r *Route53) Notify(ctx context.Context, ipv4Addr *net.IP, ipv6Addr *net.IP
 	return err
 }
 
-func (r *Route53) makeChange(ip *net.IP, recordType string) *route53.ResourceRecordSet {
+func (r *Route53) makeChange(ip net.IP, recordType string) *route53.ResourceRecordSet {
 	ttl := int64(r.TTL * time.Second)
 	ipAddr := ip.String()
 	return &route53.ResourceRecordSet{

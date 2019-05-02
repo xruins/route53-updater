@@ -2,12 +2,12 @@ package ipfetcher
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"time"
-
-	"github.com/hashicorp/go-retryablehttp"
+	//"github.com/hashicorp/go-retryablehttp"
 )
 
 // IPFetcher is the interface to define fetch remote ipv4/v6 addresses
@@ -29,21 +29,24 @@ func getByIPv6(ctx context.Context, url string) ([]byte, error) {
 }
 
 func getWithExponentialBackoff(ctx context.Context, url string, proto string) ([]byte, error) {
-	client := &http.Client{}
-	client.Transport = &http.Transport{
-		Dial: (func(network, addr string) (net.Conn, error) {
-			return (&net.Dialer{
-				Timeout:   3 * time.Second,
-				LocalAddr: nil,
-				DualStack: false,
-			}).Dial(proto, addr)
-		}),
+	dial := &net.Dialer{
+		Timeout:   30 * time.Second,
+		KeepAlive: 30 * time.Second,
+		DualStack: false,
+	}
+	dialTLSFunc := func(network, addr string) (net.Conn, error) {
+		network = proto
+		return dial.Dial(network, addr)
 	}
 
-	rtClient := retryablehttp.NewClient()
-	rtClient.HTTPClient = client
+	client := http.DefaultClient
+	client.Transport = &http.Transport{
+		DialTLS: dialTLSFunc,
+	}
 
-	resp, err := retryablehttp.Get(url)
+	// rtClient := retryablehttp.NewClient()
+	// rtClient.HTTPClient = &client
+	resp, err := client.Get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -53,6 +56,7 @@ func getWithExponentialBackoff(ctx context.Context, url string, proto string) ([
 	if err != nil {
 		return nil, err
 	}
+	fmt.Printf("body: %s, proto: %s\n", body, proto)
 
 	return body, nil
 }
