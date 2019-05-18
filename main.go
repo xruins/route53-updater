@@ -15,8 +15,8 @@ import (
 
 type cmdOptions struct {
 	Domain       string `short:"d" long:"domain" description:"domain name to notify." validator:"required,fqdn"`
-	IPV4Address  string `short:"4" long:"ipv4" description:"IPV4 address to notify. specify 'omit' to skip notification of IPv4 address." validator:"ipv4"`
-	IPV6Address  string `short:"6" long:"ipv6" description:"IPV6 address to notify. specify 'omit' to skip notification of IPv4 address." validator:"ipv6"`
+	IPV4Address  string `short:"4" long:"ipv4" description:"IPV4 address to notify." validator:"ipv4"`
+	IPV6Address  string `short:"6" long:"ipv6" description:"IPV6 address to notify." validator:"ipv6"`
 	HostedZoneID string `short:"z" long:"hosted-zone-id" description:"HostedZoneID of Route53." validator:"required,alphanum"`
 	TTL          int32  `short:"t" long:"ttl" description:"time to live in second for DNS records." validator:"min=0"`
 }
