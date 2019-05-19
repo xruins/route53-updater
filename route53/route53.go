@@ -14,7 +14,7 @@ import (
 type Route53 struct {
 	Domain       string
 	HostedZoneID string
-	TTL          time.Duration
+	TTL          int32
 }
 
 // Notify notifies DNS records to Route53.

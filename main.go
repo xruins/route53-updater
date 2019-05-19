@@ -39,6 +39,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	fmt.Printf("params: %#v", options)
+
 	if options.IPV4Address == "" && options.IPV6Address == "" {
 		fmt.Fprintln(os.Stderr, "either --ipv4 or --ipv6 required.")
 		os.Exit(1)
@@ -52,7 +54,7 @@ func main() {
 	r53 := &route53.Route53{
 		Domain:       options.Domain,
 		HostedZoneID: options.HostedZoneID,
-		TTL:          time.Duration(options.TTL) * time.Second,
+		TTL:          options.TTL,
 	}
 	err = r53.Notify(ctx, ipv4, ipv6)
 	if err != nil {
