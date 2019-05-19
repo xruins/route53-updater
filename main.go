@@ -38,8 +38,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("params: %#v", options)
-
 	if options.IPV4Address == "" && options.IPV6Address == "" {
 		fmt.Fprintln(os.Stderr, "either --ipv4 or --ipv6 required.")
 		os.Exit(1)

@@ -28,7 +28,7 @@ func (r *Route53) Notify(ctx context.Context, ipv4Addr net.IP, ipv6Addr net.IP) 
 		resSets = append(resSets, r.makeChange(ipv4Addr, route53.RRTypeA))
 	}
 	if ipv6Addr != nil {
-		resSets = append(resSets, r.makeChange(ipv4Addr, route53.RRTypeAaaa))
+		resSets = append(resSets, r.makeChange(ipv6Addr, route53.RRTypeAaaa))
 	}
 
 	var changes []*route53.Change
