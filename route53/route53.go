@@ -58,7 +58,7 @@ func (r *Route53) Notify(ctx context.Context, ipv4Addr net.IP, ipv6Addr net.IP) 
 }
 
 func (r *Route53) makeChange(ip net.IP, recordType string) *route53.ResourceRecordSet {
-	ttl := int64(r.TTL * time.Second)
+	ttl := int64(r.TTL)
 	ipAddr := ip.String()
 	return &route53.ResourceRecordSet{
 		Name: &r.Domain,

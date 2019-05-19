@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"time"
 
 	"github.com/jessevdk/go-flags"
 	"gopkg.in/go-playground/validator.v9"
