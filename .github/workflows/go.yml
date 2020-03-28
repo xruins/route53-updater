@@ -25,9 +25,15 @@ jobs:
     - name: Build
       run: go build -v .
 
-    - name: Release
+    - name: Prepare for release
+      env:
+        GOPATH: /home/runner/go
       run: |
         go get github.com/laher/goxc  
-        /home/runner/go/bin/goxc -wlc default publish-github -apikey=$GITHUB_TOKEN
-        /home/runner/go/bin/goxc
+        $GOPATH/bin/goxc -wlc default publish-github -apikey=$GITHUB_TOKEN
+
+    - name: Release
+      env:
+        GOPATH: /home/runner/go
+      run: $GOPATH/bin/goxc
         
