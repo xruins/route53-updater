@@ -29,5 +29,5 @@ jobs:
       run: |
         go get github.com/laher/goxc
         go env 1>&2
-        ls -lRa /bin 1>&2
+        ls -lRa $GOPATH 1>&2
         $GOPATH/bin/goxc
