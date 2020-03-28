@@ -27,12 +27,9 @@ jobs:
     - name: Build
       run: go build -v .
 
-    - name: Prepare for release
+    - name: Install goxc
       run: go get github.com/laher/goxc
       
-    - name: Prepare for release 
-      run: $GOPATH/bin/goxc -wlc default publish-github -apikey=$GITHUB_TOKEN
-
     - name: Release
-      run: $GOPATH/bin/goxc
+      run: $GOPATH/bin/goxc -apikey=$GITHUB_TOKEN
         
