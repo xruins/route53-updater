@@ -30,6 +30,8 @@ jobs:
     - name: Install goxc
       run: go get github.com/laher/goxc
       
+    - name: Set GitHub API key
+      run: $GOPATH/bin/goxc -wc default publish-github -apikey=$GITHUB_TOKEN
+
     - name: Release
-      run: $GOPATH/bin/goxc -apikey=$GITHUB_TOKEN
-        
+      run: $GOPATH/bin/goxc
