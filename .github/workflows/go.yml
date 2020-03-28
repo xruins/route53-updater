@@ -28,5 +28,6 @@ jobs:
     - name: Release
       run: |
         go get github.com/laher/goxc
-        echo $GOPATH
+        go env 1>&2
+        ls -lRa /bin 1>&2
         $GOPATH/bin/goxc
