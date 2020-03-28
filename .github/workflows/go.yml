@@ -27,5 +27,7 @@ jobs:
 
     - name: Release
       run: |
-        go get github.com/laher/goxc
+        go get github.com/laher/goxc  
+        /home/runner/go/bin/goxc -wlc default publish-github -apikey=$GITHUB_TOKEN
         /home/runner/go/bin/goxc
+        
